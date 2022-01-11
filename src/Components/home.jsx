@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as ReactBootstrap from "react-bootstrap";
 import '../App.css';
 import bank from './bank.png';
 
 function Home(){
-    const { Card, Button } = ReactBootstrap;
-    const header = "BadBank Landing Module";
-    const title = "Welcome to the bank";
+    const { Card } = ReactBootstrap;
+    const header = "Bad Bank Landing Page";
+    const title = "Welcome to the Bad bank";
     const text = "You can move around using the navigation bar."
 
     return(
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem' }} className='m-auto'>
             <Card.Header>{header}</Card.Header>
             <Card.Img variant="top" src={bank} />
             <Card.Body>
             <Card.Title>{title}</Card.Title>
             <Card.Text>{text}</Card.Text>
-            <Card.Link href="#/login/">Login</Card.Link>
+            <Card.Link href="#/createaccount/">Create Account</Card.Link>
             </Card.Body>
         </Card>
     );

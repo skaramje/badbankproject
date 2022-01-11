@@ -1,40 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import ReactTooltip from 'react-tooltip';
+
 
 function NavBar(){
-    return(
+    
+    return (
         <>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="#">BadBank</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <a className="nav-link" href="#/createaccount/">CreateAccount</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#/login/">Login</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#/deposit/">Deposit</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#/withdraw/">Withdraw</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#/balance/">Balance</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#/alldata/">AllData</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+            <Navbar bg="info" expand="lg">
+                <Container fluid>
+                <Navbar.Brand href="#">Bad Bank</Navbar.Brand>
+                <Navbar.Toggle aria-controls="navbarScroll" />
+                <Navbar.Collapse id="navbarScroll">
+                    <Nav className="m-auto me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+                        <Nav.Link href = "#/" data-tip="Home page">Home</Nav.Link>
+                        <ReactTooltip place="bottom" type="dark" effect="solid" />
+                        <Nav.Link href ="#/createaccount" data-tip="Create a new account">Create Account</Nav.Link>
+                        <Nav.Link href="#/login" data-tip="Login to an existing account">Login</Nav.Link>
+                        <Nav.Link href ="#/deposit" data-tip="Deposit funds to your account">Deposit</Nav.Link>
+                        <Nav.Link href ="#/withdraw" data-tip="Withdraw funds from your account">Withdraw</Nav.Link>
+                        <Nav.Link href ="#/alldata" data-tip="View all history">All Data</Nav.Link>
+                    </Nav>
+            </Navbar.Collapse>
+            </Container>
+            </Navbar>
         </>
-    );
+    )
+    
 }
-
 export default NavBar;
