@@ -17,7 +17,7 @@ function AllData(){
           Name: {user.name} <br/>
           Email: {user.email} <br/>
           Password: {user.password} <br/>
-          Balance (USD): {user.balance} <br/>
+          Balance (USD): {parseFloat(user.balance).toFixed(2)} <br/>
           {user.logs.map((log, idx) => 
             <ListGroup.Item key={idx}>
               <br />

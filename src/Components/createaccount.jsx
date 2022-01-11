@@ -21,6 +21,11 @@ function CreateAccount(){
       }
       return true;
     }
+
+    function findId(user){
+      let res = ctx.users.findIndex(item => item.name === user);
+      return res;
+    }
   
     function handleCreate(){
      
@@ -44,6 +49,13 @@ function CreateAccount(){
         
         return;
       }
+
+      var user = ctx.users.filter(user => user.email === email)[0];
+      if(user){
+        alert('This user already exists');
+        return;
+      }
+      
       const dateTime = new Date();
 
       ctx.users.push({name, email, password, balance:0, logs:[{

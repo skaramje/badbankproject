@@ -10,8 +10,8 @@ import Deposit from './Components/deposit';
 import Withdraw from './Components/withdraw';
 import AllData from './Components/alldata';
 import UserContext from './Components/usercontext';
-
-
+import ActiveUserContext from './Components/activeusercontext';
+import Logout from './Components/logout';
 
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
           }
           }
           >
+            <ActiveUserContext.Provider value={[]}>
             <div className = "container" style = {{padding: "20px"}}>
               <Routes>
                 <Route path="/" element = {<Home />} />
@@ -43,9 +44,10 @@ function App() {
                 <Route path="/deposit" element={< Deposit />} />
                 <Route path="/withdraw" element={<Withdraw />} />
                 <Route path="/alldata" element={<AllData />} />
-                
+                <Route path="/logout" element={<Logout />} />
               </Routes>
             </div>
+            </ActiveUserContext.Provider>
         </UserContext.Provider>
     </HashRouter>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
-
 import Card from 'react-bootstrap/Card';
 import UserContext from './usercontext';
+import ActiveUserContext from './activeusercontext';
 
 function Withdraw(){
   
@@ -9,44 +9,58 @@ function Withdraw(){
   const [amount, setAmount] = React.useState('');
   const [button, setButton] = React.useState(false);
   const ctx = React.useContext(UserContext);
-  
-  const len = ctx.users.length;
+  var activeuserMain = React.useContext(ActiveUserContext);
 
   const regEx = {
-    numberFormatError: /^\d+$/
+    numberFormatError: /^[1-9]\d*(\.\d+)?$/
   }
 
-  function createLog(context, transactionType, amount, userID, balance){
+  function findId(user){
+    let res = ctx.users.findIndex(item => item.name === user);
+    return res;
+  }
+
+
+  function createLog(context, transactionType, amount, userID){
     const dateTime = new Date();
-    context.users[len - 1].logs.push(
+    context.users[userID].logs.push(
       {
           transactionDate: `${dateTime.getMonth() + 1}/${dateTime.getDate()}/${dateTime.getFullYear()}`,
           transactionTime: `${`0${dateTime.getHours()}`.slice(-2)}:${`0${dateTime.getMinutes()}`.slice(-2)}:${`0${dateTime.getSeconds()}`.slice(-2)}`,
           transactionType: transactionType,
-          transactionAmount: `USD ${amount}`
+          transactionAmount: `USD ${parseFloat(amount).toFixed(2)}`
       }
     );
   
   }
 
   function handleWithdraw(){
+    if(activeuserMain[0] == undefined){
+      alert(`Need to sign in to withdraw`);
+      return;
+    }
+
     if(amount < 0){
       alert('Cannot withdraw a negative value');
       return;
     }
 
     if(!regEx.numberFormatError.test(amount)){
-      alert('Please enter a number');
+      alert('Please enter a valid number');
       return;
     }
 
-    if(amount > ctx.users[len - 1].balance){
+    if(amount > ctx.users[findId(activeuserMain[0])].balance){
       alert('Cannot withdraw funds more than available in your account');
       return;
     }
 
-    ctx.users[ len - 1 ].balance -= Number(amount);
-    createLog(ctx, 'Withdraw', amount, 'skaramje', 'balance');
+    var user = ctx.users.filter(user => user.name === activeuserMain[0])[0];
+    console.log('active user' + JSON.stringify(user));
+
+    ctx.users[ findId(activeuserMain[0]) ].balance -= Number(amount);
+    createLog(ctx, 'Withdraw', amount, findId(activeuserMain[0]));
+
     setShow(false);
   }
 
@@ -55,6 +69,9 @@ function Withdraw(){
     setShow(true);
   }
   
+  if(activeuserMain[0] !== undefined){
+    var activeBalance = `Current account balance is USD ${parseFloat(ctx.users[findId(activeuserMain[0])].balance).toFixed(2)}`;
+  }
   const header = 'Withdraw funds';
   const headerSuccess = 'Withdraw was processed';
 
@@ -63,7 +80,7 @@ function Withdraw(){
       <Card.Header>{show ? (<>{header}</>) : (<>{headerSuccess}</>) }</Card.Header>
       <Card.Body>{show ? (
         <>
-        {`Current account balance is USD ${ctx.users[len - 1].balance}`}<br/>
+        {activeBalance}<br/>
         <br />
         Enter USD amount to Withdraw <br/>
         <input className="form-control" id="amount"               placeholder="Enter amount" value={amount} onChange={e => {
@@ -75,7 +92,7 @@ function Withdraw(){
       ) : (
         <>
         <h5>Success</h5>
-        {`Account balance is USD ${ctx.users[len - 1].balance}`}<br/>
+        {activeBalance}<br/>
         <button type="submit" className="btn btn-light" onClick={clearForm}>Withdraw more funds</button>
         </>
       )}

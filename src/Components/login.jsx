@@ -1,18 +1,18 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import ActiveUserContext from './activeusercontext';
 import UserContext from './usercontext';
 
 function Login(){
 
     const [show, setShow] = React.useState(true);
     const [status, setStatus] = React.useState('');
-    const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [activeuser, setActiveuser] = React.useState('');
     const [button, setButton] = React.useState(false);  
     const ctx = React.useContext(UserContext);    
-
+    var activeuserMain = React.useContext(ActiveUserContext);
 
     function validate(field, label=''){
       if (!field) {
@@ -25,10 +25,17 @@ function Login(){
     
     function authenticate(email, password){
       if(!email){
-        alert('This email does not exist')
+        alert('This account does not exist')
         return false;
       } else if (!password){
         alert('Password is incorrect')
+        return false;
+      }
+      return true;
+    }
+
+    function logincheck(name){
+      if(activeuserMain[0] == name){
         return false;
       }
       return true;
@@ -48,12 +55,10 @@ function Login(){
       
       if(!validate(email, 'email')){
         alert('Please enter a valid email');
-        
         return;
       }
       if(!validate(password, 'password')){
         alert('Please enter a password');
-        
         return;
       }
 
@@ -63,8 +68,16 @@ function Login(){
       if(!authenticate(user, pass)){
         return;
       }
-      console.log(user.name);
+
+      if(!logincheck(user.name)){
+        alert('User is already logged in');
+        return;
+      }
+
+      console.log(`username is handle login ${user.name}`);
       setActiveuser(user.name);
+      activeuserMain.splice(0,1,user.name);
+      console.log(`active user ${activeuserMain}`);
       update(user.name);
       setShow(false);
     }
@@ -72,13 +85,16 @@ function Login(){
      
       
     function clearForm(){
-      setName('');
       setEmail('');
       setPassword('');
       setShow(true);
       setButton(false);
     }
     
+    function username(){
+      setShow(false);
+    }
+
     const header = 'Login to your account Account';
     const headerSuccess = 'Welcome!';
 
@@ -104,7 +120,7 @@ function Login(){
           ) : (
             <>
             <h5>Success</h5>
-            <button type="submit" className="btn btn-light" onClick={clearForm}>Welcome back, {activeuser}!</button>
+            <button type="submit" className="btn btn-light" onClick={username}>Welcome back, {activeuser}!</button>
             </>
           )}
 

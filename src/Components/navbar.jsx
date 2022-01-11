@@ -20,6 +20,7 @@ function NavBar(){
                         <Nav.Link href ="#/deposit" data-tip="Deposit funds to your account">Deposit</Nav.Link>
                         <Nav.Link href ="#/withdraw" data-tip="Withdraw funds from your account">Withdraw</Nav.Link>
                         <Nav.Link href ="#/alldata" data-tip="View all history">All Data</Nav.Link>
+                        <Nav.Link href ="#/logout" data-tip="Logout">Logout</Nav.Link>
                     </Nav>
             </Navbar.Collapse>
             </Container>

@@ -5,9 +5,9 @@ import bank from './bank.png';
 
 function Home(){
     const { Card } = ReactBootstrap;
-    const header = "Bad Bank Landing Page";
+    const header = "Bad Bank";
     const title = "Welcome to the Bad bank";
-    const text = "You can move around using the navigation bar."
+    const text = "For all your banking needs"
 
     return(
         <Card style={{ width: '18rem' }} className='m-auto'>
