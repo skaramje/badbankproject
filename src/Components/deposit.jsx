@@ -12,7 +12,7 @@ function Deposit(){
   var activeuserMain = React.useContext(ActiveUserContext);
    
   const regEx = {
-    numberFormatError: /^[1-9]\d*(\.\d+)?$/
+    numberFormatError: /^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/
   }
 
   function findId(user){
